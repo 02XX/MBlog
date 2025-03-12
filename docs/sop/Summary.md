@@ -1,0 +1,263 @@
+---
+title: 总结
+categories: leetcode
+tags:
+date: 2025-3-2T13:50:36.004Z
+updated: 2025-3-2T13:50:36.004Z
+---
+
+<!--more-->
+
+## 滑动窗口
+
+### 可变滑动窗口
+
+```cpp
+Input: array, target
+Output: window
+n = Length(array)
+left = 0, right = 0
+window = []
+while(right < n)
+    window.add(array[right++])
+    while(window meets the conditions)
+        do something
+        window.remove(array[left++])      
+return window  
+```
+
+### 固定滑动窗口
+
+```cpp
+Input: array, windowSize
+Output: window
+n = Length(array)
+left = 0, right = 0
+window = []
+while(right < n)
+    window.add(array[right++])
+    if(Length(window) >= windowSize)
+        do something
+        window.remove(array[left++])      
+return window  
+```
+
+>注意：固定滑动窗口condition判定用的if， 可变滑动窗口用的while
+
+## 二叉树的遍历
+
+三种方法
+
+### 递归
+
+```cpp
+//前序遍历
+void traversal(TreeNode* root,vector<int>& result)
+{
+    if(root == nullptr) return;
+    result.push_back(root->val); //中
+    traversal(root->left, result); //左
+    traversal(root->right, result); //右
+}
+```
+
+```cpp
+//中序遍历
+void traversal(TreeNode* root,vector<int>& result)
+{
+    if(root == nullptr) return;
+    traversal(root->left, result); //左
+    result.push_back(root->val); //中
+    traversal(root->right, result); //右
+}
+```
+
+```cpp
+//后序遍历
+void traversal(TreeNode* root,vector<int>& result)
+{
+    if(root == nullptr) return;
+    traversal(root->left, result); //左
+    traversal(root->right, result); //右
+    result.push_back(root->val); //中
+}
+```
+
+### 布尔标记的迭代法
+
+使用bool标记是否为当前节点的左右节点安排过入栈，如有，则处理该节点，如无，则安排其左右节点，并将标记置为true
+
+```cpp
+stack<pair<TreeNode*, bool>> s;
+if(root) s.push({root, false});
+while (!s.empty()) 
+{
+    auto [current, visited] = s.top();
+    s.pop();
+    if(visited)
+    {
+        //左右和自己已经安排过入栈，处理节点
+        do something
+    }
+    else
+    {
+        //安排左右和自己入栈的顺序
+        //前序顺序为中左右，那么入栈就要右左中
+        //中序顺序左中右，那么入栈就要右中左
+        //后序顺序左右中，那么入栈就要中右左
+        s.push({current, true}); //中
+        if(current->right) s.push({current->right, false}); //右
+        if(current->left) s.push({current->left,false}); //左
+    }
+}
+```
+
+>注意这种方法的入栈顺序与遍历顺序的关系
+
+### 层序遍历
+
+```cpp
+queue<Node*> q;
+if(root) q.push(root);
+while (!q.empty()) 
+{
+    int size = q.size(); 
+    for(int i = 0; i < size; i++) //注意：这里一定要用固定大小的size。不能用vector的size()
+    {
+        auto current = q.front();
+        q.pop();
+        do something
+        for(auto x : current->children)
+        {
+            if(current->left) q.push(current->left);
+            if(current->right) q.push(current->right);
+        }
+    }
+}
+```
+
+## 回溯法
+
+```cpp
+void backTracking(参数)
+{
+    if(终止条件)
+    {
+        do something
+        return;
+    }
+    for(本层元素)
+    {
+        处理节点 //例如: push_back(current)
+        backTracking(参数) //例如: backTracking(i+1)
+        回溯 //例如: pop_back()
+    }
+}
+```
+
+## 动态规划
+
+## 背包问题
+
+均使用状态压缩，初始化简单。
+
+### 01背包
+
+```cpp
+for(int i = 0; i < items.size(); i++) //物品
+{
+    for(int j = bagCapacity; j >= weights[i]; j--) //背包
+    {
+        dp[j] = max(dp[j], dp[j - weights[i]] + value[i]);
+    }
+}
+```
+
+>二维DP物品和背包的顺序无所谓，但是状态压缩后的DP顺序很重要
+
+### 完全背包
+
+```cpp
+for(int i = 0; i < items.size(); i++) //物品
+{
+    for(int j = weights[i]; j <= bagCapacity ; j++) //背包
+    {
+        dp[j] = max(dp[j], dp[j - weights[i]] + value[i]);
+    }
+}
+```
+
+>注意：01背包和完全背包中背包的遍历顺序
+
+>完全背包的顺序
+>组合数：先物品后背包
+>排列数：先背包后物品
+
+### 多重背包
+
+将多重背包展开即可转换为01背包问题
+
+```cpp
+for(int i = 0; i < items.size(); i++) //物品
+{
+    for(int j = bagCapacity; j >= weights[i]; j--) //背包
+    {
+        for (int k = 1; k <= itemNums[i] && (j - k * weight[i]) >= 0; k++) 
+        { 
+            dp[j] = max(dp[j], dp[j - k * weight[i]] + k * value[i]);
+        }
+    }
+}
+```
+
+## 单调栈
+
+注意栈的顺序是递增还是递减
+
+## 图论
+
+主意DFS BFS算法， 最短距离的算法
+
+### DFS
+
+```cpp
+void dfs(int start, vector<vector<int>>& adjs, vector<bool>& visited)
+{
+    //Optional
+    //if(condition) return;
+    visited[start] = true;
+    do something;
+    for(int next : adjs[start])
+    {
+        if(!visited[next])
+        {
+            dfs(next, adjs, visited);
+        }
+    }
+}
+```
+
+### BFS
+
+```cpp
+int bfs(vector<vector<int>>& adjs, vector<bool>& visited, int n) {
+        queue<int> q;
+        q.push(0);
+        visited[0] = true;
+        while (!q.empty()) {
+            int size = q.size();
+            for (int i = 0; i < size; ++i) {
+                int current = q.front();
+                q.pop();
+                do something;
+                for (int neighbor : adjs[current]) {
+                    if (!visited[neighbor]) {
+                        visited[neighbor] = true;
+                        q.push(neighbor);
+                    }
+                }
+            }
+        }
+    }
+```
+
