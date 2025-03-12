@@ -334,7 +334,7 @@ $n \leqslant z \leqslant f$
 为了消除投影窗口映射到后台缓冲区时，需要告诉硬件纵横比的压需求，需要将$[-r,r]$归一化到$[-1,1]$。为了写出投影矩阵，同时又保存深度缓冲信息Z，需将$[n,f]$也归一化到$[0,1]$，近平面为0，远平面为1。
 
 因此可以写出变换矩阵即透视投影矩阵：
-$\boldsymbol{P}=\left[\begin{array}{cccc}\frac{1}{r \tan \left(\frac{\alpha}{2}\right)} & 0 & 0 & 0 \\ 0 & \frac{1}{\tan \left(\frac{\alpha}{2}\right)} & 0 & 0 \\ 0 & 0 & \frac{f}{f-n} & 1 \\ 0 & 0 & \frac{-n f}{f-n} & 0\end{array}\right]$
+$\mathbf{P}=\left[\begin{array}{cccc}\frac{1}{r \tan \left(\frac{\alpha}{2}\right)} & 0 & 0 & 0 \\ 0 & \frac{1}{\tan \left(\frac{\alpha}{2}\right)} & 0 & 0 \\ 0 & 0 & \frac{f}{f-n} & 1 \\ 0 & 0 & \frac{-n f}{f-n} & 0\end{array}\right]$
 
 > $\frac{-n f}{f-n}$和$\frac{f}{f-n}$的推导过程可以参考《DirectX12 3D 游戏开发实战》第162页。
 
@@ -348,11 +348,12 @@ $\boldsymbol{P}=\left[\begin{array}{cccc}\frac{1}{r \tan \left(\frac{\alpha}{2}\
 > 0 & 0 & D & 0 \end{bmatrix}
 > $$
 >
-> 则可以根据以下式子反推出则可以根据以下式子反推出$\alpha$,$r$,$n$,$f$
-> $r=\frac{B}{A} \\ \alpha=2 \arctan\left(\frac{1}{B}\right) \\ n=-\frac{D}{C} \\ f=\frac{D}{1-C}$
+> 则可以根据以下式子反推出则可以根据以下式子反推出 $\alpha$,$r$,$n$,$f$
+> 
+> $r=\frac{B}{A}$, $\alpha=2 \arctan\left(\frac{1}{B}\right)$, $n=-\frac{D}{C}$ ,$f=\frac{D}{1-C}$$
 
 > 透视投影矩阵的另一种形式，已知$n,f$,近平面高$h$,宽$w$
-> $\boldsymbol{P}=\left[\begin{array}{cccc}\frac{2 n}{w} & 0 & 0 & 0 \\ 0 & \frac{2 n}{h} & 0 & 0 \\ 0 & 0 & \frac{f}{f-n} & 1 \\ 0 & 0 & \frac{-n f}{f-n} & 0\end{array}\right]$
+> $\mathbf{P}=\left[\begin{array}{cccc}\frac{2 n}{w} & 0 & 0 & 0 \\ 0 & \frac{2 n}{h} & 0 & 0 \\ 0 & 0 & \frac{f}{f-n} & 1 \\ 0 & 0 & \frac{-n f}{f-n} & 0\end{array}\right]$
 
 顶点$(x,y,z,1)$与透视投影矩阵相乘得到的是齐次裁剪空间或投影空间的坐标，因此进行一次透视除法后，得到的便是规格化设备坐标NDC
 
