@@ -14,7 +14,7 @@ const base = '/MBlog/'
 export default defineConfig({
   // 继承博客主题(@sugarat/theme)
   extends: blogTheme,
-  // base,
+  base,
   lang: 'zh-cn',
   title: 'MBlog',
   description: '凡所有相 皆是虚妄',
