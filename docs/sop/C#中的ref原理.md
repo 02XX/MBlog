@@ -45,7 +45,7 @@ class A
 
 ## 对应C++
 
-![heap-tdnt.png](./C#中的ref原理/heap-tdnt.png)
+![heap-tdnt.png](./Csharp中的ref原理/heap-tdnt.png)
 
 ```cpp
 #include <iostream>
@@ -96,4 +96,4 @@ int main(int, char**)
 
 ```
 
-![output.png](./C#中的ref原理/PixPin_2024-11-30_14-41-30.png)
+![output.png](./Csharp中的ref原理/PixPin_2024-11-30_14-41-30.png)

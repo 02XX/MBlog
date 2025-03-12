@@ -28,7 +28,7 @@ For each test case, print in one line the average waiting time of all the custom
 
 ### Sample Input:
 
-```in
+```shell
 7 3
 07:55:00 16
 17:00:01 2
@@ -41,7 +41,7 @@ For each test case, print in one line the average waiting time of all the custom
 
 ### Sample Output:
 
-```out
+```shell
 8.2
 ```
 

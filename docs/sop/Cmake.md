@@ -82,7 +82,7 @@ int main()
 
 `g++ -S example.i -o example.s`
 
-```assembly
+```cpp
  .file "example.cpp"
  .text
  .section .rdata,"dr"

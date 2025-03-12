@@ -26,26 +26,26 @@ For each test case, output two numbers, one in each line. The first number is th
 
 ### Sample Input 1:
 
-```in
+```shell
 67 3
 ```
 
 ### Sample Output 1:
 
-```out
+```shell
 484
 2
 ```
 
 ### Sample Input 2:
 
-```in
+```shell
 69 3
 ```
 
 ### Sample Output 2:
 
-```out
+```shell
 1353
 3
 ```

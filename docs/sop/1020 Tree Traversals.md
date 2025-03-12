@@ -26,7 +26,7 @@ For each test case, print in one line the level order traversal sequence of the 
 
 ### Sample Input:
 
-```in
+```shell
 7
 2 3 1 5 7 6 4
 1 2 3 4 5 6 7
@@ -34,7 +34,7 @@ For each test case, print in one line the level order traversal sequence of the 
 
 ### Sample Output:
 
-```out
+```shell
 4 1 6 3 5 7 2
 ```
 

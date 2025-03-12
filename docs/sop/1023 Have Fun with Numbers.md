@@ -24,13 +24,13 @@ For each test case, first print in a line "Yes" if doubling the input number giv
 
 ### Sample Input:
 
-```in
+```shell
 1234567899
 ```
 
 ### Sample Output:
 
-```out
+```shell
 Yes
 2469135798
 ```

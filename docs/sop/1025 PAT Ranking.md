@@ -28,7 +28,7 @@ The locations are numbered from 1 to *N*. The output must be sorted in nondecrea
 
 ### Sample Input:
 
-```in
+```shell
 2
 5
 1234567890001 95
@@ -45,7 +45,7 @@ The locations are numbered from 1 to *N*. The output must be sorted in nondecrea
 
 ### Sample Output:
 
-```out
+```shell
 9
 1234567890005 1 1 1
 1234567890014 1 2 1

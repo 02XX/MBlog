@@ -39,7 +39,7 @@ For each query, first print the original query in a line, then output the result
 
 ### Sample Input:
 
-```in
+```shell
 3
 1111111
 The Testing Book
@@ -70,7 +70,7 @@ ZUCS Print2
 
 ### Sample Output:
 
-```out
+```shell
 1: The Testing Book
 1111111
 2222222

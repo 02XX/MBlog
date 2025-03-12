@@ -22,7 +22,7 @@ For each test case, print each of the deepest roots in a line. If such a root is
 
 ### Sample Input 1:
 
-```in
+```shell
 5
 1 2
 1 3
@@ -32,7 +32,7 @@ For each test case, print each of the deepest roots in a line. If such a root is
 
 ### Sample Output 1:
 
-```out
+```shell
 3
 4
 5
@@ -40,7 +40,7 @@ For each test case, print each of the deepest roots in a line. If such a root is
 
 ### Sample Input 2:
 
-```in
+```shell
 5
 1 3
 1 4
@@ -50,7 +50,7 @@ For each test case, print each of the deepest roots in a line. If such a root is
 
 ### Sample Output 2:
 
-```out
+```shell
 Error: 2 components
 ```
 

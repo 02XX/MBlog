@@ -29,7 +29,7 @@ conda install cuda -c nvidia/label/cuda-12.6.0
 
 **版本号一定要和pytoch的cuda版本号对应**
 
-![pytorch](./未分类/image-bnst.png)
+![pytorch](conda安装带有编译工具nvcc的完整cudatoolkit/image.png)
 
 ```bash
 conda install pytorch torchvision torchaudio pytorch-cuda=xx.xx -c pytorch -c nvidia
