@@ -1,5 +1,5 @@
 import { defineConfig } from 'vitepress'
-
+import cryptoPlugin from './crypto-plugin.ts'  
 // 导入主题的配置
 import { blogTheme } from './blog-theme'
 import katex from 'markdown-it-katex'
@@ -63,5 +63,10 @@ export default defineConfig({
     config(md) {
         md.use(katex)
     },
+  },
+  vite:{
+    plugins: [  
+        cryptoPlugin()
+    ]  
   }
 })
