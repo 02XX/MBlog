@@ -1,5 +1,4 @@
 import { defineConfig } from 'vitepress'
-
 // 导入主题的配置
 import { blogTheme } from './blog-theme'
 import katex from 'markdown-it-katex'
