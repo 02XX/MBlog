@@ -158,3 +158,84 @@ Cosine Weight重要性采样
 $$
 \iint_{\Omega}cos\theta d\theta=\iint_{\Omega}\frac{cos\theta}{\frac{cos\theta}{\pi}}\frac{cos\theta}{\pi} d\theta\approx \frac{\pi}{n}\sum_{i=1}^{n}1
 $$
+
+## 逆变换采样
+
+用途：从均匀概率分布生成目标概率分布的样本（从一个分布生成另一个分布）
+
+核心思想：若随机变量X为需要采样的样本，X服从某一分布$X\sim PDF_X=f$ 令 $Y=CDF_X(X)=F_X(X)$ 那么Y一定服从 $Y\sim U(0,1)$ 而这一过程的逆方向就是逆变换采样。
+
+>为什么 $Y\sim U(0,1)$
+> $CDF_y(Y)=P(Y\leq y)=P(F_X(X)\leq y)=P(X\leq F_X^{-1}(y))=F_X(F_X^{-1}(y))=y$
+> 而在区间 $(0,1)$ 的均匀分布的CDF正是 $A\sim U(0,1), F_A(y)=y$
+
+方法：
+
+1. 确定目标PDF
+2. 计算对应的CDF以及反函数
+3. 生成均匀采样的样本，根据这些样本和反函数生成对应的样本
+
+### 圆内均匀采样
+
+1. 确定目标PDF
+在圆内任取一块**单位**面积的PDF为 $\frac{1}{\pi R^2}$
+故 $$\int_{circle} \frac{1}{\pi R^2}dA = \int_{circle} \frac{r}{\pi R^2}drd\theta = 1$$
+故 $PDF(r,\theta)=\frac{r}{\pi R^2}$
+2. 计算对应的CDF以及反函数
+$$PDF_r(r,\theta)=\int_0^{2\pi}\frac{r}{\pi R^2}d\theta=\frac{2r}{R^2}$$
+$$PDF_{\theta}(r,\theta)=\int_0^{R}\frac{r}{\pi R^2}dr=\frac{1}{2\pi}$$
+$$CDF_r(r,\theta)=\int_0^{r}\frac{2r}{R^2}dr=\frac{r^2}{R^2}$$
+$$CDF_{\theta}(r,\theta)=\int_0^{\theta}\frac{1}{2\pi}d\theta=\frac{\theta}{2\pi}$$
+反函数
+$$\xi=CDF_r(r,\theta), r = CDF^{-1}(\xi,\theta)=R\sqrt{\xi}$$
+$$\eta=CDF_\theta(r,\theta), \theta = CDF^{-1}(r,\eta)=2\pi\eta$$
+其中 $\xi,\eta \sim U(0,1)$
+
+### 球面均匀采样
+
+1. 确定目标PDF
+在球面内任取一块**单位**面积的PDF为 $\frac{1}{4\pi}$
+故 $$\int_{sphere} \frac{1}{4\pi}dA = \int_{sphere} \frac{1}{4\pi}\sin\theta d\theta d\phi = 1$$
+故 $PDF(\theta,\pi)=\frac{1}{4\pi}\sin\theta$
+2. 计算对应的CDF以及反函数
+$$PDF_\theta(\theta,\pi)=\int_0^{2\pi}\frac{1}{4\pi}\sin\theta d\phi=\frac{1}{2}\sin\theta$$
+$$PDF_\phi(\theta,\pi)=\int_0^{\pi}\frac{1}{4\pi}\sin\theta d\theta=\frac{1}{2\pi}$$
+$$CDF_\theta(\theta,\phi)=\int_0^{\theta}\frac{1}{2}\sin\theta d\theta=\frac{1-\cos\theta}{2}$$
+$$CDF_\phi(\theta,\phi)=\int_0^{\phi}\frac{1}{2\pi} d\phi=\frac{\phi}{2\pi}$$
+反函数
+$$\xi=CDF_\theta(\theta,\phi), \theta = CDF^{-1}(\xi,\phi)=\arccos(1-2\xi)$$
+$$\eta=CDF_\theta(\theta,\phi), \phi = CDF^{-1}(\theta,\eta)=2\pi\eta$$
+其中 $\xi,\eta \sim U(0,1)$
+
+### 半球面均匀采样
+
+1. 确定目标PDF
+在球面内任取一块**单位**面积的PDF为 $\frac{1}{2\pi}$
+故 $$\int_{hemisphere} \frac{1}{2\pi}dA = \int_{hemisphere} \frac{1}{2\pi}\sin\theta d\theta d\phi = 1$$
+故 $PDF(\theta,\pi)=\frac{1}{2\pi}\sin\theta$
+2. 计算对应的CDF以及反函数
+$$PDF_\theta(\theta,\pi)=\int_0^{2\pi}\frac{1}{2\pi}\sin\theta d\phi=\sin\theta$$
+$$PDF_\phi(\theta,\pi)=\int_0^{ \frac{\pi}{2} }\frac{1}{2\pi}\sin\theta d\theta=\frac{1}{2\pi}$$
+$$CDF_\theta(\theta,\phi)=\int_0^{\theta}\sin\theta d\theta=1-\cos\theta$$
+$$CDF_\phi(\theta,\phi)=\int_0^{\phi}\frac{1}{2\pi} d\phi=\frac{\phi}{2\pi}$$
+反函数
+$$\xi=CDF_\theta(\theta,\phi), \theta = CDF^{-1}(\xi,\phi)=\arccos(1-\xi)$$
+$$\eta=CDF_\theta(\theta,\phi), \phi = CDF^{-1}(\theta,\eta)=2\pi\eta$$
+其中 $\xi,\eta \sim U(0,1)$
+
+### 半球面余弦权重采样
+
+1. 确定目标PDF
+令 $PDF(\theta,\phi) \propto \cos\theta$, $\int_{hemisphere}k\cos\theta dA=\int_{hemisphere}k\cos\theta\sin\theta d\theta d\phi=1$
+故 $PDF(\theta,\phi)=\frac{1}{\pi}\cos\theta\sin\theta$
+2. 计算对应的CDF以及反函数
+$$PDF_\theta(\theta,\pi)=\int_0^{2\pi}\frac{1}{\pi}\cos\theta\sin\theta d\phi=2\sin\theta\cos\theta$$
+$$PDF_\phi(\theta,\pi)=\int_0^{ \frac{\pi}{2} }\frac{1}{\pi}\cos\theta\sin\theta d\theta=\frac{1}{2\pi}$$
+$$CDF_\theta(\theta,\phi)=\int_0^{\theta}2\sin\theta\cos\theta d\theta=\frac{1-\cos2\theta}{2}$$
+$$CDF_\phi(\theta,\phi)=\int_0^{\phi}\frac{1}{2\pi} d\phi=\frac{\phi}{2\pi}$$
+反函数
+$$\xi=CDF_\theta(\theta,\phi), \theta = CDF^{-1}(\xi,\phi)=\frac{arccos(1-2\xi)}{2}$$
+$$\eta=CDF_\theta(\theta,\phi), \phi = CDF^{-1}(\theta,\eta)=2\pi\eta$$
+其中 $\xi,\eta \sim U(0,1)$
+
+>从上往下看在平面上投影是均匀的，因此可以将圆内均匀分布的点投影到半球面上作为半球面余弦权重采样
